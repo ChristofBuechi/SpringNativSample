@@ -1,13 +1,13 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.3'
-    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id 'org.springframework.boot' version '2.7.3'
+    id "io.spring.dependency-management" version "1.0.13.RELEASE"
     id 'java'
-    id 'org.springframework.experimental.aot' version '0.9.0'
+    id 'org.springframework.experimental.aot' version '0.12.1'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     maven { url 'https://repo.spring.io/release' }
@@ -15,17 +15,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.experimental:spring-native:0.9.0'
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }
 
-bootBuildImage {
-    builder = "paketobuildpacks/builder:tiny"
-    environment = ["BP_NATIVE_IMAGE": 'true']
+
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder:tiny'
+    environment = ['BP_NATIVE_IMAGE': 'true']
 }
