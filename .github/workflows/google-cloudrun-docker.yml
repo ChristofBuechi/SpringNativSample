@@ -52,7 +52,7 @@ on:
 env:
   PROJECT_ID: springnativebackend # TODO: update Google Cloud project id
   GAR_LOCATION: europe-west3 # TODO: update Artifact Registry location
-  SERVICE: springnativebackend # TODO: update Cloud Run service name
+  SERVICE: rest-service # TODO: update Cloud Run service name
   REGION: europe-west3 # TODO: update Cloud Run service region
 
 jobs:
