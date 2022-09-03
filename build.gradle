@@ -42,4 +42,10 @@ publishing {
     tasks.named('bootBuildImage') {
         builder = 'gcr.io/buildpacks/builder:v1'
         environment = ['BP_NATIVE_IMAGE': 'true']
+        publish = true
+        docker {
+            publishRegistry {
+                url = 'europe-west3-docker.pkg.dev/springnativebackend/native-image-docker-repo'
+            }
+        }
     }
