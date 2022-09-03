@@ -2,7 +2,9 @@ plugins {
     id 'org.springframework.boot' version '2.7.3'
     id "io.spring.dependency-management" version "1.0.13.RELEASE"
     id 'java'
+    id 'maven-publish'
     id 'org.springframework.experimental.aot' version '0.12.1'
+    id "com.google.cloud.artifactregistry.gradle-plugin" version "2.1.4"
 }
 
 group = 'com.example'
@@ -11,6 +13,7 @@ sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     maven { url 'https://repo.spring.io/release' }
+    maven { url 'artifactregistry://europe-west3-maven.pkg.dev/springnativebackend/native-image-docker-repo' }
     mavenCentral()
 }
 
@@ -23,12 +26,20 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+publishing {
+    repositories {
+        maven {
+            url 'artifactregistry://europe-west3-maven.pkg.dev/springnativebackend/native-image-docker-repo'
+        }
+    }
 }
 
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 
-tasks.named('bootBuildImage') {
-    builder = 'gcr.io/buildpacks/builder:v1'
-    environment = ['BP_NATIVE_IMAGE': 'true']
-}
+
+    tasks.named('bootBuildImage') {
+        builder = 'gcr.io/buildpacks/builder:v1'
+        environment = ['BP_NATIVE_IMAGE': 'true']
+    }

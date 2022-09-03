@@ -20,7 +20,7 @@ RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && gradle --version
 
 RUN native-image --version
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && gradle bootBuildImage
+RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && gradle bootBuildImage --debug
 
 
 # We use a Docker multi-stage build here in order that we only take the compiled native Spring Boot App from the first build container
